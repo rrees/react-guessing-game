@@ -17,12 +17,25 @@ class App extends Component {
   }
 }
 
+class GameButtons extends Component {
+  render() {
+    const buttons = this.props.numbers.map((n) =>
+      <button key={n.toString()} className="Game--GuessButton">{n.toString()}</button>
+    );
+
+    return (
+      <div>{buttons}</div>
+    )
+  }
+}
+
 class Game extends Component {
   render() {
     return (
       <div className="Game">
-        <p>{this.state.targetNumber} {this.maxGuessableNumber}</p>
-        <button className="Game--GuessButton">1</button>
+        <p>Looking for {this.state.targetNumber} among 1 to {this.maxGuessableNumber}</p>
+        <GameButtons numbers={this.guessableNumbers} />
+
       </div>
     )
   }
@@ -33,6 +46,7 @@ class Game extends Component {
     const maxGuessableNumber = 10;
 
     this.maxGuessableNumber = maxGuessableNumber;
+    this.guessableNumbers = Array(maxGuessableNumber).fill().map((_, i) => 1 + i);
 
     const target = Math.floor(Math.random() * maxGuessableNumber);
     this.state = {
