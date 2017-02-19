@@ -26,15 +26,15 @@ class Game extends Component {
     }
     );
 
-    function generateStrapline(state, maxGuessableNumber) {
+    function generateStrapline(state) {
       if(state.won) {
         return "Congratulations, you won";
       }
 
-      return `Looking for ${state.targetNumber} among 1 to ${maxGuessableNumber}`;
+      return `Looking for ${state.targetNumber} among 1 to ${state.maxGuessableNumber}`;
     }
 
-    const strapline = generateStrapline(this.state, this.maxGuessableNumber);
+    const strapline = generateStrapline(this.state);
 
 
     return (
@@ -47,7 +47,7 @@ class Game extends Component {
   }
 
   handleGuess(n) {
-    console.log(n);
+
     if( n === this.state.targetNumber) {
       this.setState({
         won: true,
@@ -65,19 +65,20 @@ class Game extends Component {
 
     const target = Math.floor(Math.random() * maxGuessableNumber);
 
-    this.state = {
+    return {
       maxGuessableNumber: maxGuessableNumber,
       guessableNumbers: Array(maxGuessableNumber).fill().map((_, i) => 1 + i),
       targetNumber: target + 1,
       playing: true,
-      guessedNumbers: []
+      won: false,
+      guessedNumbers: [],
     }
   }
 
   constructor(props) {
     super(props);
 
-    this.setupGame();
+    this.state = this.setupGame();
   }
 }
 
