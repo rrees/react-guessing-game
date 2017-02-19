@@ -20,8 +20,10 @@ class App extends Component {
 class Game extends Component {
 
   render() {
-    const buttons = this.guessableNumbers.map((n) =>
-      <button key={n.toString()} className="Game--GuessButton"  onClick={(e) => this.handleGuess(n)}>{n.toString()}</button>
+    const buttons = this.state.guessableNumbers.map((n) => {
+      const disabled = this.state.guessedNumbers.includes(n) ? "disabled": "";
+      return <button key={n.toString()} className="Game--GuessButton" disabled={disabled} onClick={(e) => this.handleGuess(n)}>{n.toString()}</button>
+    }
     );
 
     function generateStrapline(state, maxGuessableNumber) {
@@ -53,17 +55,19 @@ class Game extends Component {
       })
     }
 
-    this.state.guessedNumbers.push(n);
+    this.setState({
+      guessedNumbers: this.state.guessedNumbers.concat([n])
+    });
   }
 
   setupGame() {
     const maxGuessableNumber = 10;
 
-    this.maxGuessableNumber = maxGuessableNumber;
-    this.guessableNumbers = Array(maxGuessableNumber).fill().map((_, i) => 1 + i);
-
     const target = Math.floor(Math.random() * maxGuessableNumber);
+
     this.state = {
+      maxGuessableNumber: maxGuessableNumber,
+      guessableNumbers: Array(maxGuessableNumber).fill().map((_, i) => 1 + i),
       targetNumber: target + 1,
       playing: true,
       guessedNumbers: []
