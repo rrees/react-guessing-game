@@ -24,22 +24,39 @@ class Game extends Component {
       <button key={n.toString()} className="Game--GuessButton"  onClick={(e) => this.handleGuess(n)}>{n.toString()}</button>
     );
 
+    function generateStrapline(state, maxGuessableNumber) {
+      if(state.won) {
+        return "Congratulations, you won";
+      }
+
+      return `Looking for ${state.targetNumber} among 1 to ${maxGuessableNumber}`;
+    }
+
+    const strapline = generateStrapline(this.state, this.maxGuessableNumber);
+
+
     return (
       <div className="Game">
-        <p>Looking for {this.state.targetNumber} among 1 to {this.maxGuessableNumber}</p>
+        <p>{strapline}</p>
         <div>{buttons}</div>
 
       </div>
     )
   }
 
-  handleGuess(e) {
-    console.log(e);
+  handleGuess(n) {
+    console.log(n);
+    if( n === this.state.targetNumber) {
+      this.setState({
+        won: true,
+        playing: false
+      })
+    }
+
+    this.state.guessedNumbers.push(n);
   }
 
-  constructor(props) {
-    super(props);
-
+  setupGame() {
     const maxGuessableNumber = 10;
 
     this.maxGuessableNumber = maxGuessableNumber;
@@ -48,8 +65,15 @@ class Game extends Component {
     const target = Math.floor(Math.random() * maxGuessableNumber);
     this.state = {
       targetNumber: target + 1,
-      playing: true
+      playing: true,
+      guessedNumbers: []
     }
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.setupGame();
   }
 }
 
