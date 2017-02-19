@@ -26,7 +26,7 @@ class Game extends Component {
     }
     );
 
-    function generateStrapline(state) {
+    function renderStrapline(state) {
       if(state.won) {
         return "Congratulations, you won";
       }
@@ -34,12 +34,9 @@ class Game extends Component {
       return `Looking for ${state.targetNumber} among 1 to ${state.maxGuessableNumber}`;
     }
 
-    const strapline = generateStrapline(this.state);
-
-
     return (
       <div className="Game">
-        <p>{strapline}</p>
+        <p>{renderStrapline(this.state)}</p>
         <div>{buttons}</div>
 
       </div>
@@ -48,16 +45,18 @@ class Game extends Component {
 
   handleGuess(n) {
 
+    const stateUpdate = {
+      guessedNumbers: this.state.guessedNumbers.concat([n])
+    };
+
     if( n === this.state.targetNumber) {
-      this.setState({
+      Object.assign(stateUpdate, {
         won: true,
         playing: false
-      })
+      });
     }
 
-    this.setState({
-      guessedNumbers: this.state.guessedNumbers.concat([n])
-    });
+    this.setState(stateUpdate);
   }
 
   setupGame() {
