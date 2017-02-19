@@ -22,7 +22,7 @@ class Game extends Component {
   render() {
     const buttons = this.state.guessableNumbers.map((n) => {
       const disabled = this.state.guessedNumbers.includes(n) ? "disabled": "";
-      return <button key={n.toString()} className="Game--GuessButton" disabled={disabled} onClick={(e) => this.handleGuess(n)}>{n.toString()}</button>
+      return <button key={n.toString()} className="Game--GuessButton" disabled={disabled} onClick={(e) => this.handleGuess(this.state, n)}>{n.toString()}</button>
     }
     );
 
@@ -43,13 +43,13 @@ class Game extends Component {
     )
   }
 
-  handleGuess(n) {
+  handleGuess(state, n) {
 
     const stateUpdate = {
-      guessedNumbers: this.state.guessedNumbers.concat([n])
+      guessedNumbers: state.guessedNumbers.concat([n])
     };
 
-    if( n === this.state.targetNumber) {
+    if( n === state.targetNumber) {
       Object.assign(stateUpdate, {
         won: true,
         playing: false
