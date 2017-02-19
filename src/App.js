@@ -17,27 +17,24 @@ class App extends Component {
   }
 }
 
-class GameButtons extends Component {
+class Game extends Component {
+
   render() {
-    const buttons = this.props.numbers.map((n) =>
-      <button key={n.toString()} className="Game--GuessButton">{n.toString()}</button>
+    const buttons = this.guessableNumbers.map((n) =>
+      <button key={n.toString()} className="Game--GuessButton"  onClick={(e) => this.handleGuess(n)}>{n.toString()}</button>
     );
 
     return (
-      <div>{buttons}</div>
-    )
-  }
-}
-
-class Game extends Component {
-  render() {
-    return (
       <div className="Game">
         <p>Looking for {this.state.targetNumber} among 1 to {this.maxGuessableNumber}</p>
-        <GameButtons numbers={this.guessableNumbers} />
+        <div>{buttons}</div>
 
       </div>
     )
+  }
+
+  handleGuess(e) {
+    console.log(e);
   }
 
   constructor(props) {
