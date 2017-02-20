@@ -20,11 +20,17 @@ class App extends Component {
 class Game extends Component {
 
   render() {
-    const buttons = this.state.guessableNumbers.map((n) => {
-      const disabled = this.state.guessedNumbers.includes(n) ? "disabled": "";
-      return <button key={n.toString()} className="Game--GuessButton" disabled={disabled} onClick={(e) => this.handleGuess(this.state, n)}>{n.toString()}</button>
+
+    function renderButtons(component, state) {
+      if(state.playing) {
+        return state.guessableNumbers.map((n) => {
+          const disabled = state.guessedNumbers.includes(n) ? "disabled": "";
+          return <button key={n.toString()} className="Game--GuessButton" disabled={disabled} onClick={(e) => component.handleGuess(state, n)}>{n.toString()}</button>
+        });
+      }
+
+      return <button onClick={(e) => component.resetGame()}>Play again</button>
     }
-    );
 
     function renderStrapline(state) {
       if(state.won) {
@@ -37,7 +43,7 @@ class Game extends Component {
     return (
       <div className="Game">
         <p>{renderStrapline(this.state)}</p>
-        <div>{buttons}</div>
+        <div>{renderButtons(this, this.state)}</div>
 
       </div>
     )
@@ -57,6 +63,10 @@ class Game extends Component {
     }
 
     this.setState(stateUpdate);
+  }
+
+  resetGame() {
+    this.setState(this.setupGame());
   }
 
   setupGame() {
