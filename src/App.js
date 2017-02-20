@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Game from './game';
+
 class App extends Component {
   render() {
     return (
@@ -11,13 +13,13 @@ class App extends Component {
         <p className="App-intro">
           Guess the number I&rsquo;m thinking of.
         </p>
-        <Game />
+        <GameDisplay />
       </div>
     );
   }
 }
 
-class Game extends Component {
+class GameDisplay extends Component {
 
   render() {
 
@@ -66,28 +68,13 @@ class Game extends Component {
   }
 
   resetGame() {
-    this.setState(this.setupGame());
-  }
-
-  setupGame() {
-    const maxGuessableNumber = 10;
-
-    const target = Math.floor(Math.random() * maxGuessableNumber);
-
-    return {
-      maxGuessableNumber: maxGuessableNumber,
-      guessableNumbers: Array(maxGuessableNumber).fill().map((_, i) => 1 + i),
-      targetNumber: target + 1,
-      playing: true,
-      won: false,
-      guessedNumbers: [],
-    }
+    this.setState(Game.setup());
   }
 
   constructor(props) {
     super(props);
 
-    this.state = this.setupGame();
+    this.state = Game.setup();
   }
 }
 
