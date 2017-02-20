@@ -14,6 +14,22 @@ function setup() {
   }
 }
 
+function handleGuess(state, n) {
+    const stateUpdate = {
+      guessedNumbers: state.guessedNumbers.concat([n])
+    };
+
+    if( n === state.targetNumber) {
+      Object.assign(stateUpdate, {
+        won: true,
+        playing: false
+      });
+    }
+
+    return stateUpdate;
+  }
+
 export default {
-  setup: setup
+  setup: setup,
+  handleGuess: handleGuess
 }

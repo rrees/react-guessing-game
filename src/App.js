@@ -52,19 +52,7 @@ class GameDisplay extends Component {
   }
 
   handleGuess(state, n) {
-
-    const stateUpdate = {
-      guessedNumbers: state.guessedNumbers.concat([n])
-    };
-
-    if( n === state.targetNumber) {
-      Object.assign(stateUpdate, {
-        won: true,
-        playing: false
-      });
-    }
-
-    this.setState(stateUpdate);
+    this.setState(Game.handleGuess(state, n));
   }
 
   resetGame() {
