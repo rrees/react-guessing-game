@@ -11,12 +11,14 @@ function setup() {
     playing: true,
     won: false,
     guessedNumbers: [],
+    remainingGuesses: 3
   }
 }
 
 function handleGuess(state, n) {
     const stateUpdate = {
-      guessedNumbers: state.guessedNumbers.concat([n])
+      guessedNumbers: state.guessedNumbers.concat([n]),
+      remainingGuesses: state.remainingGuesses - 1
     };
 
     if( n === state.targetNumber) {

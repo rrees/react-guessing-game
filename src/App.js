@@ -39,7 +39,7 @@ class GameDisplay extends Component {
         return "Congratulations, you won";
       }
 
-      return `Looking for ${state.targetNumber} among 1 to ${state.maxGuessableNumber}`;
+      return `Looking for ${state.targetNumber} among 1 to ${state.maxGuessableNumber} with ${state.remainingGuesses} guesses left`;
     }
 
     return (
