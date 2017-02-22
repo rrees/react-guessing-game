@@ -26,6 +26,15 @@ function handleGuess(state, n) {
         won: true,
         playing: false
       });
+
+      return stateUpdate;
+    }
+
+    if(stateUpdate.remainingGuesses === 0) {
+      Object.assign(stateUpdate, {
+        won: false,
+        playing: false
+      });
     }
 
     return stateUpdate;
